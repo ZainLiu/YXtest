@@ -1,0 +1,60 @@
+import json
+
+a = """{"name":"eeeeeee","description":"eeeee","dc_user_map_list":[{"data_center":{"id":1,"name":"广州汇云"},"user_id_list":[{"id":391,"name":"谭长华"},{"id":436,"name":"易娟"}],"id":1},{"data_center":{"id":5,"name":"dddd"},"user_id_list":[],"id":5}],"permission":[{"module":"data_center_building","info":{"path_list":["add","edit","detail"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","detail"]}},{"module":"data_center_floor","info":{"path_list":["add","edit","detail"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","detail"]}},{"module":"room_type","info":{"path_list":["add","edit","active"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","active"]}},{"module":"data_center_room","info":{"path_list":["add","edit","downloadQrcode","checkQrcode"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","downloadQrcode","checkQrcode"]}},{"module":"equipment_sys","info":{"path_list":["add","edit","addChild","active"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","addChild","active"]}},{"module":"equipment","info":{"path_list":["add","edit","detail"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","detail"]}},{"module":"equipment_group","info":{"path_list":["detail"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["detail"]}},{"module":"cabinet_management","info":{"path_list":["add","edit","del"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","del"]}},{"module":"material_classification","info":{"path_list":["add","edit","addChild","active"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","addChild","active"]}},{"module":"material","info":{"path_list":["add","edit","detail"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["add","edit","detail"]}},{"module":"storehouse","info":{"path_list":["addStore","editStore","addShelves","editShelves","addHierarchy","editHierarchy"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["addStore","editStore","addShelves","editShelves","addHierarchy","editHierarchy"]}},{"module":"stock_management","info":{"path_list":["editWarningNum","detail"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["editWarningNum","detail"]}},{"module":"material_io","info":{"path_list":["detail"],"data_permission":0,"is_edit_self":false,"field_ignore":[],"menu":["detail"]}}],"id":12,"current_project_id":"2"}"""
+print(json.loads(a))
+b = {'name': 'eeeeeee', 'description': 'eeeee', 'dc_user_map_list': [
+    {'data_center': {'id': 1, 'name': '广州汇云'}, 'user_id_list': [{'id': 391, 'name': '谭长华'}, {'id': 436, 'name': '易娟'}],
+     'id': 1}, {'data_center': {'id': 5, 'name': 'dddd'}, 'user_id_list': [], 'id': 5}], 'permission': [
+    {'module': 'data_center_building',
+     'info': {'path_list': ['add', 'edit', 'detail'], 'data_permission': 0, 'is_edit_self': False, 'field_ignore': [],
+              'menu': ['add', 'edit', 'detail']}}, {'module': 'data_center_floor',
+                                                    'info': {'path_list': ['add', 'edit', 'detail'],
+                                                             'data_permission': 0, 'is_edit_self': False,
+                                                             'field_ignore': [], 'menu': ['add', 'edit', 'detail']}},
+    {'module': 'room_type',
+     'info': {'path_list': ['add', 'edit', 'active'], 'data_permission': 0, 'is_edit_self': False, 'field_ignore': [],
+              'menu': ['add', 'edit', 'active']}}, {'module': 'data_center_room', 'info': {
+        'path_list': ['add', 'edit', 'downloadQrcode', 'checkQrcode'], 'data_permission': 0, 'is_edit_self': False,
+        'field_ignore': [], 'menu': ['add', 'edit', 'downloadQrcode', 'checkQrcode']}}, {'module': 'equipment_sys',
+                                                                                         'info': {'path_list': ['add',
+                                                                                                                'edit',
+                                                                                                                'addChild',
+                                                                                                                'active'],
+                                                                                                  'data_permission': 0,
+                                                                                                  'is_edit_self': False,
+                                                                                                  'field_ignore': [],
+                                                                                                  'menu': ['add',
+                                                                                                           'edit',
+                                                                                                           'addChild',
+                                                                                                           'active']}},
+    {'module': 'equipment',
+     'info': {'path_list': ['add', 'edit', 'detail'], 'data_permission': 0, 'is_edit_self': False, 'field_ignore': [],
+              'menu': ['add', 'edit', 'detail']}}, {'module': 'equipment_group',
+                                                    'info': {'path_list': ['detail'], 'data_permission': 0,
+                                                             'is_edit_self': False, 'field_ignore': [],
+                                                             'menu': ['detail']}}, {'module': 'cabinet_management',
+                                                                                    'info': {
+                                                                                        'path_list': ['add', 'edit',
+                                                                                                      'del'],
+                                                                                        'data_permission': 0,
+                                                                                        'is_edit_self': False,
+                                                                                        'field_ignore': [],
+                                                                                        'menu': ['add', 'edit',
+                                                                                                 'del']}},
+    {'module': 'material_classification',
+     'info': {'path_list': ['add', 'edit', 'addChild', 'active'], 'data_permission': 0, 'is_edit_self': False,
+              'field_ignore': [], 'menu': ['add', 'edit', 'addChild', 'active']}}, {'module': 'material', 'info': {
+        'path_list': ['add', 'edit', 'detail'], 'data_permission': 0, 'is_edit_self': False, 'field_ignore': [],
+        'menu': ['add', 'edit', 'detail']}}, {'module': 'storehouse', 'info': {
+        'path_list': ['addStore', 'editStore', 'addShelves', 'editShelves', 'addHierarchy', 'editHierarchy'],
+        'data_permission': 0, 'is_edit_self': False, 'field_ignore': [],
+        'menu': ['addStore', 'editStore', 'addShelves', 'editShelves', 'addHierarchy', 'editHierarchy']}},
+    {'module': 'stock_management',
+     'info': {'path_list': ['editWarningNum', 'detail'], 'data_permission': 0, 'is_edit_self': False,
+              'field_ignore': [], 'menu': ['editWarningNum', 'detail']}}, {'module': 'material_io',
+                                                                           'info': {'path_list': ['detail'],
+                                                                                    'data_permission': 0,
+                                                                                    'is_edit_self': False,
+                                                                                    'field_ignore': [],
+                                                                                    'menu': ['detail']}}], 'id': 12,
+     'current_project_id': '2'}
