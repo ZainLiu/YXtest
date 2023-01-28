@@ -146,7 +146,7 @@ class Engine(RouterGroup):
 
     def run_http(self):
         try:
-            run_simple("127.0.0.1", 8080, self, processes=2)
+            run_simple("127.0.0.1", 8080, self)
         finally:
             # reset the first request information if the development server
             # reset normally.  This makes it possible to restart the server
