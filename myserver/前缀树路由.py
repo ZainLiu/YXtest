@@ -1,4 +1,5 @@
 import os
+import time
 
 from werkzeug import run_simple
 
@@ -91,10 +92,50 @@ class Route(object):
         return None, None
 
 
-def sayhello(params):
+def sayhello(context):
     print(os.getpid())
-    print(f'hello:{params.get("name")}'.encode('utf-8'))
-    return f'hello:{params.get("name")}'.encode('utf-8')
+    context.start_response('200 OK', [('Content-Type', 'text/html;charset=utf-8')])
+    print(f'hello:{context.params.get("name")}'.encode('utf-8'))
+    context.respone = f'hello:{context.params.get("name")},v1'.encode('utf-8')
+
+
+def sayhellov2(context):
+    print(os.getpid())
+    context.start_response('200 OK', [('Content-Type', 'text/html;charset=utf-8')])
+    print(f'hello:{context.params.get("name")}'.encode('utf-8'))
+    context.respone = f'hello:{context.params.get("name")},v2'.encode('utf-8')
+
+
+def NotFound_404(context):
+    context.start_response('200 OK', [('Content-Type', 'text/html;charset=utf-8')])
+    context.respone = f"404 NOT FOUND: %{context.env.get('PATH_INFO')}\n".encode('utf-8')
+
+
+def Logger():
+    def inner(context):
+        t = time.time()
+        context.next()
+        print(f"执行时间：{time.time() - t}")
+
+    return inner
+
+
+class Context(object):
+    """请求上下文"""
+    index = -1
+    handlers = []
+    respone = None
+
+    def __init__(self, env, start_response):
+        self.env = env
+        self.start_response = start_response
+
+    def next(self):
+        self.index += 1
+        s = len(self.handlers)
+        while self.index < s:
+            self.handlers[self.index](self)
+            self.index += 1
 
 
 class RouterGroup(object):
@@ -124,33 +165,38 @@ class RouterGroup(object):
     def post(self, pattern, handler):
         self.add_route("POST", pattern, handler)
 
+    def use(self, *middlewares):
+        self.middlewares.extend(middlewares)
+
 
 class Engine(RouterGroup):
     route = Route()
     groups = []
 
     def __call__(self, env, start_response):
+        c = Context(env, start_response)
 
         path = env.get("PATH_INFO")
         method = env.get("REQUEST_METHOD")
-
+        middlewares = []
+        for group in self.groups:
+            if path.startswith(group.prefix):
+                middlewares.extend(group.middlewares)
+        c.handlers = middlewares
         node, params = self.route.get_route(method, path)
+        c.params = params
         if node:
             handler = self.route.handlers.get(f"{method}-{node.pattern}")
-            resp = handler(params)
+            c.handlers.append(handler)
         else:
-            resp = "没有匹配到相关路由".encode('utf-8')
-        start_response('200 OK', [('Content-Type', 'text/html;charset=utf-8')])
-        print(start_response, type(start_response))
-        return [resp]
+            c.handlers.append(NotFound_404)
+        c.next()
+        return [c.respone]
 
     def run_http(self):
         try:
             run_simple("127.0.0.1", 8080, self)
         finally:
-            # reset the first request information if the development server
-            # reset normally.  This makes it possible to restart the server
-            # without reloader and that stuff from an interactive shell.
             print("启动成功".encode('utf-8'))
 
 
@@ -158,5 +204,6 @@ if __name__ == '__main__':
     py_gee = Engine()
     py_gee.get("/hello/:name/haha", sayhello)
     v2 = py_gee.group("/v1")
-    v2.get("/hello/:name/haha", sayhello)
+    v2.use(Logger())
+    v2.get("/hello/:name/haha", sayhellov2)
     py_gee.run_http()
