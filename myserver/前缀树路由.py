@@ -173,6 +173,13 @@ class Engine(RouterGroup):
     route = Route()
     groups = []
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.get("/hello/:name/haha", sayhello)
+        v2 = self.group("/v1")
+        v2.use(Logger())
+        v2.get("/hello/:name/haha", sayhellov2)
+
     def __call__(self, env, start_response):
         c = Context(env, start_response)
 
@@ -199,11 +206,11 @@ class Engine(RouterGroup):
         finally:
             print("启动成功".encode('utf-8'))
 
+    def run_tcp(self):
+        pass
+
+
+py_gee = Engine()
 
 if __name__ == '__main__':
-    py_gee = Engine()
-    py_gee.get("/hello/:name/haha", sayhello)
-    v2 = py_gee.group("/v1")
-    v2.use(Logger())
-    v2.get("/hello/:name/haha", sayhellov2)
     py_gee.run_http()
